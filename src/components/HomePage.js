@@ -9,11 +9,13 @@ import '../styles/HomePage.css';
 
 const HomePage = () => {
   const [players, setPlayers] = useState([]);
-  const [selectedPlayers, setSelectedPlayer] = useState([]);
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [teams, setTeams] = useState(null);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState(''); // State to track errors
 
   useEffect(() => {
+    // Fetch players from the API
     axios
       .get('http://localhost:8000/api/players/')
       .then((response) => {
@@ -26,19 +28,57 @@ const HomePage = () => {
       })
       .catch((error) => {
         console.error('Error fetching players:', error);
+        setError('Failed to load players. Please try again later.');
       });
   }, []);
 
   const handleAddPlayer = (newPlayer) => {
+    setError(''); // Clear previous errors
+    setMessage('');
+
+    if (!['Goalkeeper', 'Attacker', 'Defender', 'Player'].includes(newPlayer.position)) {
+      setError('Invalid position. Please select a valid position.');
+      return;
+    }
+
     axios
       .post('http://localhost:8000/api/players/', newPlayer)
       .then(() => {
         setMessage('Player added successfully!');
-        window.location.reload(); // Reload to update players
+        // Reload players without refreshing the page
+        axios
+          .get('http://localhost:8000/api/players/')
+          .then((response) => {
+            setPlayers(
+              response.data.map((player) => ({
+                value: player.id,
+                label: `${player.name} (${player.position})`,
+              }))
+            );
+          })
+          .catch((error) => {
+            console.error('Error reloading players:', error);
+            setError('Failed to reload players.');
+          });
       })
       .catch((error) => {
         console.error('Error adding player:', error);
-        setMessage('Error adding player!');
+        setError('Failed to add player. Please try again.');
+      });
+  };
+
+  const handleGenerateTeams = () => {
+    setError(''); // Clear previous errors
+    setMessage('');
+
+    axios
+      .post('http://localhost:8000/api/teams/', {
+        selected_players: selectedPlayers.map((player) => player.value),
+      })
+      .then((response) => setTeams(response.data))
+      .catch((error) => {
+        console.error('Error generating teams:', error);
+        setError('Failed to generate teams. Please try again.');
       });
   };
 
@@ -58,7 +98,7 @@ const HomePage = () => {
         <h2>Select Players</h2>
         <Select
           options={filteredPlayers}
-          onChange={(selectedOptions) => setSelectedPlayer(selectedOptions || [])}
+          onChange={(selectedOptions) => setSelectedPlayers(selectedOptions || [])}
           placeholder="Search and select players..."
           isMulti
           styles={SelectPlayer} // Apply custom styles here
@@ -74,14 +114,7 @@ const HomePage = () => {
 
       <div className="menu-tile">
         <button
-          onClick={() =>
-            axios
-              .post('http://localhost:8000/api/teams/', {
-                selected_players: selectedPlayers.map((player) => player.value),
-              })
-              .then((response) => setTeams(response.data))
-              .catch((error) => console.error('Error generating teams:', error))
-          }
+          onClick={handleGenerateTeams}
           className="btn-secondary"
           disabled={selectedPlayers.length === 0}
         >
@@ -90,7 +123,8 @@ const HomePage = () => {
         {teams && <TeamList teams={teams} />}
       </div>
 
-      {message && <div className="message">{message}</div>}
+      {message && <div className="message success">{message}</div>}
+      {error && <div className="message error">{error}</div>}
     </div>
   );
 };

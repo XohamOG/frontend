@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
+import '../styles/PlayerSelector.css';
 
 const PlayerSelector = ({ setSelectedPlayers }) => {
   const [players, setPlayers] = useState([]);
@@ -55,7 +56,8 @@ const PlayerSelector = ({ setSelectedPlayers }) => {
               backgroundColor: selectedPositions.includes(position) ? '#007BFF' : '#ddd',
               borderRadius: '5px',
               cursor: 'pointer',
-              transition: 'background-color 0.3s',
+              transition: 'background-color 0.3s, transform 0.2s',
+              transform: selectedPositions.includes(position) ? 'scale(1.05)' : 'scale(1)',
             }}
           >
             {position}
@@ -74,6 +76,17 @@ const PlayerSelector = ({ setSelectedPlayers }) => {
         placeholder="Search and select players..."
         isMulti
       />
+      <div className="selected-players">
+        {filteredPlayers.map((player) => (
+          <span
+            key={player.id}
+            className="selected-player-badge"
+            title={player.name}
+          >
+            {player.name} ({player.position})
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
