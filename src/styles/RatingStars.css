@@ -1,0 +1,23 @@
+/* src/styles/RatingStars.css */
+
+.rating {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .star {
+    font-size: 2rem;
+    color: #ccc; /* Faded color for unselected stars */
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .star.filled {
+    color: #ffd700; /* Gold color for selected/fill stars */
+  }
+  
+  /* Optional: Add hover effect */
+  .star:hover {
+    color: #ffdd00; /* Hover color for better visual feedback */
+  }
+  

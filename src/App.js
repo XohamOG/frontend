@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import HomePage from "./HomePage";
-import AddPlayerForm from "./AddPlayerForm";
+import HomePage from "./components/HomePage";
+import AddPlayerForm from "./components/AddPlayerForm";
 import ApiComponent from "./ApiComponent";
 import TeamFormation from "./TeamFormation";
 import "./App.css"; // Include the CSS

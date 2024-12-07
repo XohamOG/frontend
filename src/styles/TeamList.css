@@ -1,0 +1,31 @@
+/* src/styles/TeamList.css */
+.teams {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+  
+  .team {
+    flex: 1;
+    margin: 0 1rem;
+  }
+  
+  .team h3 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .team ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .team li {
+    background-color: #f1f1f1;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  

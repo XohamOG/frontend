@@ -1,0 +1,81 @@
+/* src/styles/HomePage.css */
+
+.homepage {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .select-players {
+    margin-bottom: 1.5rem;
+  }
+  
+  .selected-players {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .selected-player-badge {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .btn-secondary {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #0056b3;
+  }
+  
+  .teams {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+  
+  .team {
+    flex: 1;
+    margin: 0 1rem;
+  }
+  
+  .team h3 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .team ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .team li {
+    background-color: #f1f1f1;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
