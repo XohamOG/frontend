@@ -132,3 +132,70 @@ body {
   text-align: center;
   margin-top: 1rem;
 }
+
+/* Position Labels */
+.position-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.position-label {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.position-label:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.position-label.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Rating Stars */
+.rating {
+  display: flex;
+  gap: 5px;
+}
+
+.rating svg {
+  cursor: pointer;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .homepage {
+    padding: 1rem;
+  }
+
+  .add-player form {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .select-players {
+    padding: 1rem 0;
+  }
+
+  .teams {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .team {
+    margin: 0;
+  }
+}
