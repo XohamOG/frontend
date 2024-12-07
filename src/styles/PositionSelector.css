@@ -6,20 +6,20 @@
   
   .position-label {
     padding: 10px 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    background-color: #000000;
+    border: 1px solid #fffb0017;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
   }
   
   .position-label:hover {
-    background-color: #007bff;
-    color: white;
+    background-color: #ffc014;
+    color: rgb(0, 0, 0);
   }
   
   .position-label.selected {
-    background-color: #007bff;
+    background-color: #ffc014;
     color: white;
   }
   

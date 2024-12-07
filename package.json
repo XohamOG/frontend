@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@fontsource/roboto": "^5.1.0",
+    "@mui/material": "^6.1.10",
     "@shadcn/ui": "^0.0.4",
     "axios": "^1.7.9",
     "browserify-zlib": "^0.2.0",

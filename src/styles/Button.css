@@ -1,19 +1,25 @@
 /* src/styles/Button.css */
 .custom-button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .custom-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .custom-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
+  padding: 0.5rem 1rem;
+  background-color: #ffc014;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth hover and scale transition */
+}
+
+/* Hover effect with scaling and shadow */
+.custom-button:hover {
+  background-color: #e6a809; /* Slightly darker shade on hover */
+  transform: scale(1.05); /* Slight zoom-in effect */
+  box-shadow: 0 5px 15px rgba(255, 192, 20, 0.4); /* Subtle glowing shadow */
+}
+
+/* Disabled state styling */
+.custom-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none; /* Prevent hover scaling when disabled */
+  box-shadow: none; /* No shadow for disabled buttons */
+}
