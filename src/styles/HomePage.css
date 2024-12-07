@@ -4,11 +4,12 @@ body, html {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: url('D:\TeamDivider\191b6d669f008bfaf3950dd3e71ec2ca.jpg') no-repeat center center fixed;
+  background: url('D:\TeamDivider\frontend\public\images\background.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Arial', sans-serif;
 }
 
+/* Homepage container */
 .homepage {
   display: flex;
   flex-direction: column;
@@ -23,7 +24,7 @@ body, html {
   background: rgba(0, 0, 0, 0.85); /* Slightly more opaque */
   border: 1px solid #444; /* Border for definition */
   padding: 30px;
-  width: 70%; /* Reduce width for more compact tiles */
+  width: 90%; /* Change for better responsiveness */
   max-width: 500px;
   margin: 15px 0;
   color: #fff;
@@ -74,6 +75,14 @@ body, html {
   color: #fff;
   padding: 5px 10px;
   border-radius: 3px;
+  font-size: 14px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.selected-player-badge:hover {
+  background: #f39c12; /* Highlight on hover */
+  transform: scale(1.1); /* Slight zoom effect */
+  cursor: pointer;
 }
 
 /* Fade-in animation */
@@ -98,4 +107,20 @@ body::after {
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
   z-index: -1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-tile {
+    width: 100%; /* Full width on smaller screens */
+    padding: 20px;
+  }
+  
+  .menu-tile h1, .menu-tile h2 {
+    font-size: 1.5em;
+  }
+
+  .selected-player-badge {
+    font-size: 12px; /* Smaller badge text */
+  }
 }
