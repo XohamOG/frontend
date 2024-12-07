@@ -4,7 +4,6 @@ import HomePage from "./components/HomePage";
 import AddPlayerForm from "./components/AddPlayerForm";
 import ApiComponent from "./ApiComponent";
 import TeamFormation from "./TeamFormation";
-import "./App.css"; // Include the CSS
 
 function App() {
   return (
