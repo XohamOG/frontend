@@ -9,9 +9,12 @@ const AddPlayerForm = ({ onAddPlayer }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddPlayer(newPlayer);
-    setNewPlayer({ name: '', position: '', rating: 0 });
+    onAddPlayer(newPlayer); // Pass the new player to the parent component
+    setNewPlayer({ name: '', position: '', rating: 0 }); // Reset form after submitting
   };
+
+  // Check if the form is complete (name, position, and rating are selected)
+  const isFormValid = newPlayer.name && newPlayer.position && newPlayer.rating > 0;
 
   return (
     <form onSubmit={handleSubmit} className="add-player-form">
@@ -23,8 +26,11 @@ const AddPlayerForm = ({ onAddPlayer }) => {
         required
       />
       <PositionSelector onChange={(position) => setNewPlayer({ ...newPlayer, position })} />
-      <RatingStars onRate={(rating) => setNewPlayer({ ...newPlayer, rating })} />
-      <button type="submit">Add Player</button>
+      <RatingStars
+        rating={newPlayer.rating}
+        onRatingChange={(rating) => setNewPlayer({ ...newPlayer, rating })}
+      />
+      <button type="submit" disabled={!isFormValid}>Add Player</button>
     </form>
   );
 };

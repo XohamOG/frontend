@@ -23,7 +23,7 @@ const HomePage = () => {
       .catch((error) => {
         console.error('Error fetching players:', error);
       });
-  }, []);
+  }, []); // Empty dependency array means this effect runs only once when the component mounts.
 
   // Handle generating teams
   const handleGenerateTeams = () => {
@@ -37,12 +37,42 @@ const HomePage = () => {
       });
   };
 
+  // Function to handle adding a player
+  const handleAddPlayer = (newPlayer) => {
+    // Map short position values to full names
+    const positionMapping = {
+      'ATT': 'Attacker',
+      'DEF': 'Defender',
+      'GK': 'Goalkeeper',
+    };
+
+    const mappedPlayer = {
+      ...newPlayer,
+      position: positionMapping[newPlayer.position] || newPlayer.position, // Default to current if not found
+    };
+
+    // Send the player data to the server
+    axios
+      .post('http://localhost:8000/api/players/', mappedPlayer)
+      .then((response) => {
+        console.log('New player added:', response.data);
+        setMessage('Player added successfully!');
+
+        // Reload the page to reflect the newly added player
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error adding player:', error);
+        setMessage('Error adding player!');
+      });
+  };
+
   return (
     <div className="homepage">
       <h1 className="header">Team Generator</h1>
 
       {/* Add Player Form */}
-      <AddPlayerForm setMessage={setMessage} />
+      <AddPlayerForm onAddPlayer={handleAddPlayer} setMessage={setMessage} />
 
       <div className="select-players">
         <h2>Select Players</h2>
