@@ -30,7 +30,7 @@ const TeamFormation = ({ players }) => {
 
   return (
     <div>
-      <h2>Generate Teams</h2>
+      <h2>Generated Teams</h2>
       <form onSubmit={handleFormSubmit}>
         <div>
           <label>Select Players: </label>
