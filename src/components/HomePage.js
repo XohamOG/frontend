@@ -1,4 +1,3 @@
-// src/components/HomePage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
@@ -13,7 +12,8 @@ const HomePage = () => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [teams, setTeams] = useState(null);
   const [message, setMessage] = useState('');
-  const [error, setError] = useState(''); // State to track errors
+  const [error, setError] = useState('');
+  const [hoverTile, setHoverTile] = useState(null); // Track hover state for tiles
 
   useEffect(() => {
     // Fetch players from the API
@@ -34,8 +34,16 @@ const HomePage = () => {
       });
   }, []);
 
+  const handleTileHover = (tileId) => {
+    setHoverTile(tileId);
+  };
+
+  const handleTileLeave = () => {
+    setHoverTile(null);
+  };
+
   const handleAddPlayer = (newPlayer) => {
-    setError(''); // Clear previous errors
+    setError('');
     setMessage('');
 
     if (!['Goalkeeper', 'Attacker', 'Defender', 'Player'].includes(newPlayer.position)) {
@@ -55,7 +63,7 @@ const HomePage = () => {
               response.data.map((player) => ({
                 value: player.id,
                 label: `${player.name} (${player.position})`,
-                seed: player.name, // Use player name as seed for mascot avatar
+                seed: player.name,
               }))
             );
           })
@@ -71,7 +79,7 @@ const HomePage = () => {
   };
 
   const handleGenerateTeams = () => {
-    setError(''); // Clear previous errors
+    setError('');
     setMessage('');
 
     axios
@@ -92,37 +100,50 @@ const HomePage = () => {
 
   return (
     <div className="homepage">
-      <div className="menu-tile">
+      <div
+        className={`menu-tile ${hoverTile === 'add-player' ? 'hovered' : ''}`}
+        onMouseEnter={() => handleTileHover('add-player')}
+        onMouseLeave={handleTileLeave}
+      >
         <h1 className="header">Team Generator</h1>
         <AddPlayerForm onAddPlayer={handleAddPlayer} />
       </div>
 
-      <div className="menu-tile">
+      <div
+        className={`menu-tile ${hoverTile === 'select-players' ? 'hovered' : ''}`}
+        onMouseEnter={() => handleTileHover('select-players')}
+        onMouseLeave={handleTileLeave}
+      >
         <h2>Select Players</h2>
         <Select
           options={filteredPlayers}
           onChange={(selectedOptions) => setSelectedPlayers(selectedOptions || [])}
           placeholder="Search and select players..."
           isMulti
-          styles={SelectPlayer} // Apply custom styles here
-          formatOptionLabel={({ label, seed }) => (
+          styles={SelectPlayer}
+          formatOptionLabel={({ label, value }) => (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <MascotAvatar seed={seed} size={30} />
+              <MascotAvatar seed={value} size={30} /> {/* Use the value as the seed */}
               <span style={{ marginLeft: '10px' }}>{label}</span>
             </div>
           )}
         />
+
         <div className="selected-players">
           {selectedPlayers.map((player) => (
             <span key={player.value} className="selected-player-badge">
-              <MascotAvatar seed={player.label} size={20} />
+              <MascotAvatar seed={player.value} size={20} /> {/* Use the player's value as the seed */}
               {player.label}
             </span>
           ))}
         </div>
       </div>
 
-      <div className="menu-tile">
+      <div
+        className={`menu-tile ${hoverTile === 'generate-teams' ? 'hovered' : ''}`}
+        onMouseEnter={() => handleTileHover('generate-teams')}
+        onMouseLeave={handleTileLeave}
+      >
         <button
           onClick={handleGenerateTeams}
           className="btn-secondary"

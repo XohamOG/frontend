@@ -5,7 +5,7 @@ import React from 'react';
 const generateMascotUrl = (seed) =>
   `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(seed)}`;
 
-const MascotAvatar = ({ seed, size = 50 }) => {
+const MascotAvatar = ({ seed, size = 69}) => {
   const avatarUrl = generateMascotUrl(seed);
 
   return (
