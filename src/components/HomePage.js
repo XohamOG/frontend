@@ -5,6 +5,7 @@ import Select from 'react-select';
 import SelectPlayer from '../styles/SelectPlayer'; // Correct import
 import AddPlayerForm from './AddPlayerForm';
 import TeamList from './TeamList';
+import MascotAvatar from './MascotAvatar'; // Import MascotAvatar component
 import '../styles/HomePage.css';
 
 const HomePage = () => {
@@ -23,6 +24,7 @@ const HomePage = () => {
           response.data.map((player) => ({
             value: player.id,
             label: `${player.name} (${player.position})`,
+            seed: player.name, // Use player name as seed for mascot avatar
           }))
         );
       })
@@ -53,6 +55,7 @@ const HomePage = () => {
               response.data.map((player) => ({
                 value: player.id,
                 label: `${player.name} (${player.position})`,
+                seed: player.name, // Use player name as seed for mascot avatar
               }))
             );
           })
@@ -102,10 +105,17 @@ const HomePage = () => {
           placeholder="Search and select players..."
           isMulti
           styles={SelectPlayer} // Apply custom styles here
+          formatOptionLabel={({ label, seed }) => (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <MascotAvatar seed={seed} size={30} />
+              <span style={{ marginLeft: '10px' }}>{label}</span>
+            </div>
+          )}
         />
         <div className="selected-players">
           {selectedPlayers.map((player) => (
             <span key={player.value} className="selected-player-badge">
+              <MascotAvatar seed={player.label} size={20} />
               {player.label}
             </span>
           ))}
