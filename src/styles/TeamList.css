@@ -1,31 +1,60 @@
-/* src/styles/TeamList.css */
-.teams {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  
-  .team {
-    flex: 1;
-    margin: 0 1rem;
-  }
-  
-  .team h3 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .team ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .team li {
-    background-color: #f1f1f1;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    border-radius: 4px;
-    text-align: center;
+.team-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding: 0 2rem;
+}
+
+.team {
+  flex: 1;
+  margin: 0 1rem;
+  background-color: #000000;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-header {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2a2a2a;
+  margin: 1rem 0;
+  background-color: #ffc014;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.team ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.player {
+  background-color: #3b3b3b;
+  padding: 0.8rem;
+  margin: 0.6rem 0;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.player:hover {
+  background-color: #ffc014;
+  color: rgb(0, 0, 0);
+}
+
+@media (max-width: 768px) {
+  .team-container {
+    flex-direction: column;
+    padding: 0 1rem;
   }
 
-  
+  .team {
+    margin-bottom: 1rem;
+  }
+}
