@@ -15,10 +15,12 @@ const HomePage = () => {
   const [error, setError] = useState('');
   const [hoverTile, setHoverTile] = useState(null); // Track hover state for tiles
 
+  const apiUrl = process.env.REACT_APP_API_URL; // Get API URL from environment variables
+
   useEffect(() => {
     // Fetch players from the API
     axios
-      .get('http://localhost:8000/api/players/')
+      .get(`${apiUrl}/players/`)
       .then((response) => {
         setPlayers(
           response.data.map((player) => ({
@@ -32,7 +34,7 @@ const HomePage = () => {
         console.error('Error fetching players:', error);
         setError('Failed to load players. Please try again later.');
       });
-  }, []);
+  }, [apiUrl]);
 
   const handleTileHover = (tileId) => {
     setHoverTile(tileId);
@@ -52,12 +54,12 @@ const HomePage = () => {
     }
 
     axios
-      .post('http://localhost:8000/api/players/', newPlayer)
+      .post(`${apiUrl}/players/`, newPlayer)
       .then(() => {
         setMessage('Player added successfully!');
         // Reload players without refreshing the page
         axios
-          .get('http://localhost:8000/api/players/')
+          .get(`${apiUrl}/players/`)
           .then((response) => {
             setPlayers(
               response.data.map((player) => ({
@@ -83,7 +85,7 @@ const HomePage = () => {
     setMessage('');
 
     axios
-      .post('http://localhost:8000/api/teams/', {
+      .post(`${apiUrl}/teams/`, {
         selected_players: selectedPlayers.map((player) => player.value),
       })
       .then((response) => setTeams(response.data))
@@ -133,7 +135,7 @@ const HomePage = () => {
           {selectedPlayers.map((player) => (
             <span key={player.value} className="selected-player-badge">
               <MascotAvatar seed={player.value} size={30} /> {/* Use the player's value as the seed */}
-                      {player.label}
+              {player.label}
             </span>
           ))}
         </div>
