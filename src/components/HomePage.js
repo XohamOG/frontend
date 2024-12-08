@@ -132,8 +132,8 @@ const HomePage = () => {
         <div className="selected-players">
           {selectedPlayers.map((player) => (
             <span key={player.value} className="selected-player-badge">
-              <MascotAvatar seed={player.value} size={20} /> {/* Use the player's value as the seed */}
-              {player.label}
+              <MascotAvatar seed={player.value} size={30} /> {/* Use the player's value as the seed */}
+                      {player.label}
             </span>
           ))}
         </div>
