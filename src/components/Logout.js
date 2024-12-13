@@ -1,21 +1,27 @@
-// Logout.js
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/LogoutForm.css";
 
-import React from 'react';
-import axios from 'axios';
+const LogoutPage = ({ onLogout }) => {
+  const navigate = useNavigate();
 
-const Logout = () => {
-  const handleLogout = async () => {
-    try {
-      await axios.post('http://localhost:8000/api/logout/', {}, { withCredentials: true });
-      alert('Logged out successfully!');
-    } catch (error) {
-      alert('Failed to log out!');
-    }
+  const handleLogout = () => {
+    // Clear user session and navigate to login
+    onLogout();
+    navigate('/login');
   };
 
   return (
-    <button onClick={handleLogout}>Logout</button>
+    <div className="login-page logout-page">
+      <div className="login-form">
+        <h2>Goodbye!</h2>
+        <p className="logout-message">You have been logged out successfully.</p>
+        <button className="logout-button" onClick={handleLogout}>
+          Log Back In
+        </button>
+      </div>
+    </div>
   );
 };
 
-export default Logout;
+export default LogoutPage;
