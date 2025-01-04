@@ -9,15 +9,24 @@ const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleSignup = () => {
     setError('');
     setMessage('');
+    setIsLoading(true);
+
+    if (!username || !password || !confirmPassword) {
+      setError('All fields are required.');
+      setIsLoading(false);
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
+      setIsLoading(false);
       return;
     }
 
@@ -29,9 +38,15 @@ const SignupForm = () => {
       })
       .catch((error) => {
         console.error('Error during signup:', error);
-        setError(
-          error.response?.data?.detail || 'Signup failed. Please try again.'
-        );
+        
+        if (error.response?.data?.detail === 'User with this username already exists') {
+          setError('This username is already taken. Please choose a different one.');
+        } else {
+          setError(error.response?.data?.detail || 'Signup failed. Please try again.');
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -66,7 +81,9 @@ const SignupForm = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Signing up...' : 'Sign Up'}
+        </button>
         {message && <p className="success-message">{message}</p>}
         {error && <p className="error-message">{error}</p>}
       </form>

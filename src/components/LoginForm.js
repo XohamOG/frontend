@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/LoginForm.css";
+import apiClient from '../components/axiosConfig';
 
 const LoginForm = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
@@ -12,11 +12,16 @@ const LoginForm = ({ onLoginSuccess }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login/', {
+      const response = await apiClient.post('/token/', {
         username,
         password,
       });
-      console.log(response.data);
+
+      const { access, refresh, username: user } = response.data; // Use fields returned by the JWT view
+      localStorage.setItem("authToken", access);
+      localStorage.setItem("refreshToken", refresh);
+      localStorage.setItem("username", user);
+      console.log("Login successful:", response.data);
       onLoginSuccess();
       navigate('/');
     } catch (error) {

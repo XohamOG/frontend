@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Select from 'react-select';
 import SelectPlayer from '../styles/SelectPlayer'; // Correct import
 import AddPlayerForm from './AddPlayerForm';
 import TeamList from './TeamList';
 import MascotAvatar from './MascotAvatar'; // Import MascotAvatar component
 import '../styles/HomePage.css';
+import apiClient from '../components/axiosConfig';
 
 const HomePage = () => {
   const [players, setPlayers] = useState([]);
@@ -15,13 +15,11 @@ const HomePage = () => {
   const [error, setError] = useState('');
   const [hoverTile, setHoverTile] = useState(null); // Track hover state for tiles
 
-  const apiUrl = process.env.REACT_APP_API_URL; // Get API URL from environment variables
-
   useEffect(() => {
     // Fetch players from the API
-    axios
-      .get(`${apiUrl}/players/`)
-      .then((response) => {
+    const fetchPlayers = async () => {
+      try {
+        const response = await apiClient.get('/players/', );
         setPlayers(
           response.data.map((player) => ({
             value: player.id,
@@ -29,12 +27,13 @@ const HomePage = () => {
             seed: player.name, // Use player name as seed for mascot avatar
           }))
         );
-      })
-      .catch((error) => {
-        console.error('Error fetching players:', error);
-        setError('Failed to load players. Please try again later.');
-      });
-  }, [apiUrl]);
+      } catch (error) {
+        setError(error.response?.data?.detail || 'Failed to load players.');
+      }
+    };
+
+    fetchPlayers();
+  }, []);
 
   const handleTileHover = (tileId) => {
     setHoverTile(tileId);
@@ -44,55 +43,51 @@ const HomePage = () => {
     setHoverTile(null);
   };
 
-  const handleAddPlayer = (newPlayer) => {
+  const handleAddPlayer = async (newPlayer) => {
     setError('');
     setMessage('');
 
-    if (!['Goalkeeper', 'Attacker', 'Defender', 'Player'].includes(newPlayer.position)) {
-      setError('Invalid position. Please select a valid position.');
+      // Validate the new player object
+    if (!newPlayer || !newPlayer.name || !newPlayer.position || !newPlayer.rating) {
+      setError('Please provide all player details.');
       return;
     }
 
-    axios
-      .post(`${apiUrl}/players/`, newPlayer)
-      .then(() => {
-        setMessage('Player added successfully!');
-        // Reload players without refreshing the page
-        axios
-          .get(`${apiUrl}/players/`)
-          .then((response) => {
-            setPlayers(
-              response.data.map((player) => ({
-                value: player.id,
-                label: `${player.name} (${player.position})`,
-                seed: player.name,
-              }))
-            );
-          })
-          .catch((error) => {
-            console.error('Error reloading players:', error);
-            setError('Failed to reload players.');
-          });
-      })
-      .catch((error) => {
-        console.error('Error adding player:', error);
-        setError('Failed to add player. Please try again.');
-      });
+    try {
+      await apiClient.post(
+        '/players/',
+        newPlayer,
+      );
+
+      setMessage('Player added successfully!');
+      // Reload players
+      const response = await apiClient.get('/players/');
+      setPlayers(
+        response.data.map((player) => ({
+          value: player.id,
+          label: `${player.name} (${player.position})`,
+          seed: player.name,
+        }))
+      );
+    } catch (error) {
+      console.error('Error adding player:', error);
+      setError('Failed to add player. Please try again.');
+    }
   };
 
-  const handleGenerateTeams = () => {
+  const handleGenerateTeams = async () => {
     setError('');
     setMessage('');
 
-    axios
-      .post(`${apiUrl}/teams/`, {
-        selected_players: selectedPlayers.map((player) => player.value),
-      })
-      .then((response) => setTeams(response.data))
-      .catch((error) => {
-        console.error('Error generating teams:', error);
-        setError('Failed to generate teams. Please try again.');
-      });
+    try {
+      const response = await apiClient.post(
+        '/teams/',
+        { selected_players: selectedPlayers.map((player) => player.value) });
+      setTeams(response.data);
+    } catch (error) {
+      console.error('Error generating teams:', error);
+      setError('Failed to generate teams. Please try again.');
+    }
   };
 
   // Filter out the selected players from the options

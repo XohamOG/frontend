@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import SignupForm from './components/SignupForm';  // Import SignupForm
 import LoginForm from './components/LoginForm';    // Import LoginForm
@@ -10,6 +10,11 @@ import './App.css';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    setIsAuthenticated(!!token);
+  }, []);
+
   // Handle login success
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -17,6 +22,7 @@ function App() {
 
   // Handle logout
   const handleLogout = () => {
+    localStorage.removeItem("authToken");
     setIsAuthenticated(false);
   };
 

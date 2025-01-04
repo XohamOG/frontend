@@ -7,6 +7,7 @@ const LogoutPage = ({ onLogout }) => {
 
   const handleLogout = () => {
     // Clear user session and navigate to login
+    localStorage.removeItem("authToken");
     onLogout();
     navigate('/login');
   };
