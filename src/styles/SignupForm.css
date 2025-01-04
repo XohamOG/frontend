@@ -1,0 +1,131 @@
+/* General styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: url('./background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Signup container */
+.signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Form styling */
+.signup-form {
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid #444;
+  padding: 30px;
+  width: 90%;
+  max-width: 400px;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.signup-form h2 {
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffc014;
+}
+
+/* Input styling */
+.signup-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.signup-form input:focus {
+  border-color: #ffc014;
+  outline: none;
+  background: rgba(255, 208, 78, 0.123);
+  color: #ccc;
+}
+
+/* Button styling */
+.signup-form button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signup-form button:hover {
+  background: #f09f1d;
+  color: black;
+  transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(255, 192, 20, 0.4);
+}
+
+/* Error and success messages */
+.signup-form .error-message,
+.signup-form .success-message {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.signup-form .error-message {
+  color: red;
+}
+
+.signup-form .success-message {
+  color: #27ae60;
+}
+
+/* Link styling */
+.signup-form a {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: #ffc014;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signup-form a:hover {
+  color: #f39c12;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .signup-form {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .signup-form h2 {
+    font-size: 1.5em;
+  }
+}

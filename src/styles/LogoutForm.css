@@ -1,0 +1,30 @@
+/* Reuse LoginForm.css for consistency */
+@import './LoginForm.css';
+
+/* Specific styles for LogoutPage */
+.logout-page {
+  text-align: center;
+}
+
+.logout-message {
+  font-size: 1.5em;
+  color: #f39c12;
+  margin-bottom: 20px;
+}
+
+.logout-button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #c0392b;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}

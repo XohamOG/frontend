@@ -1,0 +1,18 @@
+.navbar a {
+    text-decoration: none; /* Remove underline */
+    background: #f39c12; /* Button-like background */
+    color: white; /* Button text color */
+    padding: 10px 20px; /* Add padding for button feel */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove link border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  }
+  
+  .navbar a:hover {
+    background: #f09f1d;
+  color: black;
+  transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(255, 192, 20, 0.4);
+  }
+  

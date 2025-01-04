@@ -6,11 +6,20 @@ import '../styles/AddPlayerForms.css';
 
 const AddPlayerForm = ({ onAddPlayer }) => {
   const [newPlayer, setNewPlayer] = useState({ name: '', position: '', rating: 0 });
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!newPlayer.name || !newPlayer.position || newPlayer.rating <= 0) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    // Pass the new player data back to HomePage component
     onAddPlayer(newPlayer);
     setNewPlayer({ name: '', position: '', rating: 0 });
+    setError(''); // Clear error if form is valid
   };
 
   return (
